@@ -1,6 +1,10 @@
 const http = require("http");
 const app = require("./app");
 
+// Pour résoudre une erreur inconnue lors de la création d'un utilisateur
+const cors = require("cors");
+app.use(cors());
+
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
 
