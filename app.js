@@ -21,7 +21,7 @@ const { HIDDEN_TOKEN } = require("./config.json");
 //Description des erreurs dans le terminal
 const morgan = require("morgan");
 
-//------Importation de routes vers sauce.js-------//
+//------Importation de routes pour enregistrer les routes app.use vers le front-------//
 const sauceroutes = require("./routes/stuff");
 const userRoutes = require("./routes/user");
 const app = express();
