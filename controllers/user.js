@@ -1,6 +1,6 @@
 //importation du package bcrypt pour hash (crypter) des mots de passe
 const bcrypt = require("bcrypt");
-//Authentification avec un TOKEN utilisateur unique
+//Importation du pakage jsonwebtoken pour de creer mon token et de le vérifier
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
@@ -53,8 +53,9 @@ module.exports.login = (req, res, next) => {
           //si le mot de pass correct retourne code 200 avec un ojbjet avec token et user id
           res.status(200).json({
             userId: user._id,
+            //appel de la fonction "sign" avec les arguments userid et la clefs secrète pour l'encodage
             token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
-              //expire en 24h
+              //et application d'expiration de 24h
               expiresIn: "24h",
             }),
           });

@@ -1,13 +1,23 @@
+//------- REQUIRE----------//
+
 //importation d'express
 const express = require("express");
+//importaion du middleware "auth"
+const auth = require("../middleware/auth");
+const multer = require("../middleware/multer-config");
+
+const checkSauceInput = require("../middleware/check-sauce-input");
+
+const sauceCtrl = require("../controllers/sauce");
+
 //création d'un router
 const router = express.Router();
-//router .post
-router.post("/", auth, multer, saucesCtrl.createSauce);
-//router.get
-router.get("/:id", auth, saucesCtrl.getOneSauce);
-router.get("/", auth, saucesCtrl.getAllSauce);
-//utilisation de router.put + "multer" pour la gestion des modifications images
-router.put("/:id", auth, multer, saucesCtrl.modifySauce);
-router.delete("/:id", auth, saucesCtrl.deleteSauce);
-router.post("/:id/like", auth, saucesCtrl.likesDislikes);
+
+router.get("/", auth, sauceCtrl.getAllSauces);
+router.get("/:id", auth, sauceCtrl.getOneSauce);
+router.post("/", auth, multer, checkSauceInput, sauceCtrl.createSauce);
+router.put("/:id", auth, multer, checkSauceInput, sauceCtrl.updateSauce);
+router.delete("/:id", auth, sauceCtrl.deleteSauce);
+router.post("/:id/like", auth, sauceCtrl.likeDislikeSauce);
+
+module.exports = router;
