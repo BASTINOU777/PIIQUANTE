@@ -1,20 +1,35 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "config.json": "^0.0.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^6.5.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.0",
     "mongoose-unique-validator": "^3.1.0",
     "multer": "^1.4.5-lts.1",
-    "package": "^1.0.1"
-  }
+    "package": "^1.0.1",
+    "xss-clean": "^0.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BASTINOU777/PIIQUANTE.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BASTINOU777/PIIQUANTE/issues"
+  },
+  "homepage": "https://github.com/BASTINOU777/PIIQUANTE#readme",
+  "description": ""
 }

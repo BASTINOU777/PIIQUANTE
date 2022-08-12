@@ -7,9 +7,9 @@ const auth = require("../middleware/auth");
 const multer = require("../middleware/multer-config");
 
 const checkSauceInput = require("../middleware/check-sauce-input");
-
+//creation de
 const sauceCtrl = require("../controllers/sauce");
-
+//--------création des différentes routes de l'api en leur précisant les middlewares dans l'ordre----//
 //création d'un router
 const router = express.Router();
 
