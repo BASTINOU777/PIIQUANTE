@@ -16,10 +16,6 @@ const cors = require("cors");
 const mongoSanitize = require("express-mongo-sanitize");
 //Installation du Module qui aide a cacher les adresses MongoDB
 const path = require("path");
-dotenv.config();
-const { HIDDEN_TOKEN } = require("./config.json");
-//Description des erreurs dans le terminal
-const morgan = require("morgan");
 
 //------Importation de routes pour enregistrer les routes app.use vers le front-------//
 const sauceroutes = require("./routes/stuff");
@@ -31,7 +27,7 @@ mongoose
   .connect(HIDDEN_TOKEN, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
-
+//------------- HEADERS CORS------------//
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -44,33 +40,13 @@ app.use((req, res, next) => {
   );
   next();
 });
+//Conversion en JSON
+app.use(bodyParser.json());
 
-//Utilisation de Express body parser au lieu de Body Parser
-app.use(express.json());
-
-app.use(helmet());
-
-app.use(xss());
-
-app.use(mongoSanitize());
-
-app.use(cors());
-
-app.use(morgan("dev"));
-
-const limiter = rateLimit({
-  //Une session n'est valide que pendant 15 minutes
-  windowMs: 15 * 60 * 1000,
-  //limitation à 100 requêtes par IP
-  max: 100,
-});
-//-------- Importaion des app.use ------------//
-app.use(limiter);
-
+//Gestion des images
 app.use("/images", express.static(path.join(__dirname, "images")));
-//importation des routes vers "saucesRoutes"
+
 app.use("/api/sauces", saucesRoutes);
-//importation des routes user
-app.use("/api/auth", userRoutes);
+app.use("/api/auth/", userRoutes);
 
 module.exports = app;
