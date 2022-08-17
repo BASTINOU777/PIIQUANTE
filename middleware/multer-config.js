@@ -15,6 +15,7 @@ const storage = multer.diskStorage({
   },
   //fonction "filename" qui prends 3 arguments
   filename: (req, file, callback) => {
+    console.log(file);
     // fonction d'origine du nom avec la méthode split et appellant .join
     const name = file.originalname.split(" ").join("_");
     //utilisation de MINE TYPES
@@ -24,4 +25,4 @@ const storage = multer.diskStorage({
   },
 });
 //appel de la méthode multer et on lui passe storage
-module.exports = multer({ storage: storage }).single("image"); //
+module.exports = multer({ storage: storage }).single("image"); 

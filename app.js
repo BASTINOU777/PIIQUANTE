@@ -1,33 +1,33 @@
 //Installation de express
 const express = require("express");
+//const bodyParser = require("body-parser");
 //Installation de Moogose est le module pour utiliser MongoDB
 const mongoose = require("mongoose");
-//Installation du Module de Securité pour protéger les headers
-const helmet = require("helmet");
-//Installation du Module de Sécurité contre les attaques XSS
-const xss = require("xss-clean");
-//Installation du Module Express pour mettre un temps de session limité
-const rateLimit = require("express-rate-limit");
-//Installation du Module pour charger mes variables
-const dotenv = require("dotenv");
-//Installation de Cors
-const cors = require("cors");
-//Installation du Module de Protection  contre les attaques à injection noSql
-const mongoSanitize = require("express-mongo-sanitize");
-//Installation du Module qui aide a cacher les adresses MongoDB
+//Installation du Module qui gère les routes
 const path = require("path");
 
 //------Importation de routes pour enregistrer les routes app.use vers le front-------//
-const sauceroutes = require("./routes/stuff");
-const userRoutes = require("./routes/user");
+const sauceRoutes = require("./routes /sauces");
+//import sauceRouter from "./routes/stuff";
+const userRoutes = require("./routes /user");
 const app = express();
 
 //-----------MONGOOSE------------------//
+
+// mongodb+srv://jimbob:<PASSWORD>@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority
 mongoose
-  .connect(HIDDEN_TOKEN, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(
+    "mongodb+srv://BASTINOU777:QDiFGvwyVUtF8lgc@cluster0.3yivc.mongodb.net/?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
   .then(() => console.log("Connexion à MongoDB réussie !"))
-  .catch(() => console.log("Connexion à MongoDB échouée !"));
-//------------- HEADERS CORS------------//
+  .catch((error) => console.log("Connexion à MongoDB échouée !", error));
+  //------------------ROUTES--------------------//
+
+//route générale pour transformer mes requétes en json 
+app.use(express.json());
+
+//CORS 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -40,13 +40,15 @@ app.use((req, res, next) => {
   );
   next();
 });
+
 //Conversion en JSON
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 
-//Gestion des images
+//route pour accéder aux images du dossier image
 app.use("/images", express.static(path.join(__dirname, "images")));
-
-app.use("/api/sauces", saucesRoutes);
+//route générale pour les sauces
+app.use("/api/sauces", sauceRoutes);
+//route générale pour l'authentification des utilisateurs 
 app.use("/api/auth/", userRoutes);
 
 module.exports = app;

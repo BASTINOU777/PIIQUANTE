@@ -13,5 +13,5 @@ const userSchema = mongoose.Schema({
 
 //application du pluging uniqueVaidator au shéma
 userSchema.plugin(uniqueValidator);
-//Exportation du shéma sous formede model en utilisant la fonction "model"
+//Exportation du shéma sous forme de model en utilisant la fonction "model"
 module.exports = mongoose.model("user", userSchema);
