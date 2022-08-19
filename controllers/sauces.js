@@ -4,15 +4,13 @@
 const Sauce = require("../models/sauces");
 // fonction appel du package pour la gestion des fichiers
 const fs = require("fs");
-const { json } = require("express");
 
 //-------------LES 4 ETATS DU CRUD---------------//
 
 //-----Creation de l'objet d'une Sauce
 exports.createSauce = (req, res, next) => {
   //converti en json et je parse
-  console.log("sauce:", req.body);
-  const sauceObject = { ...req.body };
+  const sauceObject = JSON.parse(req.body.sauce);
   //console.log (req.file);
   //console.log(sauceObject);
   //suppression de son Id
@@ -92,7 +90,7 @@ exports.deleteSauce = (req, res, next) => {
 
 //--------------Gestion des Dislikes et Likes ------------------//
 
-/*exports.likeOrDislikeSauce = (req, res) => {
+exports.likeOrDislikeSauce = (req, res) => {
   if (req.body.like === 1) {
     Sauce.updateOne(
       { _id: req.params.id },
@@ -141,86 +139,6 @@ exports.deleteSauce = (req, res, next) => {
             .catch((error) => res.status(400).json({ error }));
         }
       })
-      .catch((error) => res.status(400).json({ error }));
-  }
-};*/
-
-//Gestion des likes et dislikes
-exports.likeOrDislikeSauce = (req, res, next) => {
-  let like = req.body.like;
-  //let likes = req.body.likes;
-  //let dislikes = req.body.dislikes;
-  let userId = req.body.userId;
-  let sauceId = req.params.id;
-  let usersLiked = req.body.usersLiked;
-  let usersDisliked = req.body.usersDisliked;
-
-  //Liker une sauce
-  if (like === 1) {
-    //On récupère la sauce par son id
-    Sauce.updateOne(
-      { _id: sauceId },
-      {
-        //On ajoute l'id de l'utilisateur dans le tableau de ceux ayant liké la sauce et on incrémente le nombre de likes de 1
-        $push: { usersLiked: userId },
-        $inc: { likes: req.boby.like++ },
-      }
-    )
-      .then(() => res.status(200).json({ message: "Sauce likée" }))
-      .catch((error) => res.status(400).json({ error }));
-  }
-
-  //Disliker une sauce
-  else if (like === -1) {
-    //On récupère la sauce par son id
-    Sauce.updateOne(
-      { _id: sauceId },
-      {
-        //On ajoute l'id de l'utilisateur dans le tableau de ceux ayant disliké la sauce et on incrémente le nombre de dislikes de 1
-        $push: { usersDisliked: userId },
-        $inc: { dislikes: req.boby.like-- },
-      }
-    )
-      .then(() => res.status(200).json({ message: "Sauce dislikée" }))
-      .catch((error) => res.status(400).json({ error }), console.log(error));
-  }
-
-  //Annulation d'un like ou d'un dislike
-  //On récupère la sauce avec son id
-  if (like === 0) {
-    Sauce.findOne({ _id: sauceId })
-      .then((sauce) => {
-        //Annulation du like : si  le user a déjà liké la sauce, on le retire du tableau des users ayant liké la sauce et on décrémente le nombre de likes de 1
-        if (sauce.usersLiked.includes(userId)) {
-          Sauce.updateOne(
-            { _id: sauceId },
-            {
-              $pull: { usersLiked: userId },
-              $inc: { likes: -1 },
-            }
-          )
-            .then(() =>
-              res.status(200).json({ message: "Le like a été annulé" })
-            )
-            .catch((error) => res.status(400).json({ error }));
-        }
-
-        //Annulation du dislike : si le user a déjà disliké la sauce, on le retire du tableau des users ayant disliké la sauce et on décrémente le nombre de likes de 1
-        else if (sauce.usersDisliked.includes(userId)) {
-          Sauce.updateOne(
-            { _id: sauceId },
-            {
-              $pull: { usersDisliked: userId },
-              $inc: { dislikes: -1 },
-            }
-          )
-            .then(() =>
-              res.status(200).json({ message: "Le dislike a été annulé" })
-            )
-            .catch((error) => res.status(400).json({ error }));
-        }
-      })
-
       .catch((error) => res.status(400).json({ error }));
   }
 };

@@ -15,7 +15,7 @@ module.exports.signup = (req, res, next) => {
         //ajout de l'adresse mail dans le coprs de la requète
         email: req.body.email,
         //ajout du mot de passe crypté au new user
-        password: hash,
+        password: hash
       });
       //enregistrement du nouvel utilisateur
       user
