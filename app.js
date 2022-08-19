@@ -5,12 +5,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 //Installation du Module qui gère les routes
 const path = require("path");
+//const connect = require("./connect");
 
 //------Importation de routes pour enregistrer les routes app.use vers le front-------//
 const sauceRoutes = require("./routes /sauces");
 //import sauceRouter from "./routes/stuff";
 const userRoutes = require("./routes /user");
 const app = express();
+//const cors = require("cors");
 
 //-----------MONGOOSE------------------//
 
@@ -22,22 +24,20 @@ mongoose
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch((error) => console.log("Connexion à MongoDB échouée !", error));
-  //------------------ROUTES--------------------//
+//------------------ROUTES--------------------//
 
-//route générale pour transformer mes requétes en json 
-app.use(express.json());
+//route générale pour transformer mes requétes en json
+//app.use(express.json());
 
-//CORS 
+//CORS
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-  );
+  res.setHeader("Access-Control-Allow-Headers", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
+  res.setHeader("Content-type", "application/json");
   next();
 });
 
@@ -48,7 +48,9 @@ app.use((req, res, next) => {
 app.use("/images", express.static(path.join(__dirname, "images")));
 //route générale pour les sauces
 app.use("/api/sauces", sauceRoutes);
-//route générale pour l'authentification des utilisateurs 
+//route générale pour l'authentification des utilisateurs
 app.use("/api/auth/", userRoutes);
+
+//app.use(cors());
 
 module.exports = app;

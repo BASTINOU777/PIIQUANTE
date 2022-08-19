@@ -63,6 +63,6 @@ module.exports.login = (req, res, next) => {
         //sinon erreur server (500)
         .catch((error) => res.status(500).json({ error }));
     })
-    //sinon erreur de donnés 501
-    .catch((error) => res.status(501).json({ error }));
+    //sinon erreur de donnés 500
+    .catch((error) => res.status(500).json({ error }));
 };

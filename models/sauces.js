@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// shema de donnés pour chaques sauces ( donnés pour le front)
+// shema de données pour chaques sauces ( données pour le front)
 const saucesSchema = mongoose.Schema({
   userId: { type: String, required: true },
   name: { type: String, required: true },
@@ -15,4 +15,4 @@ const saucesSchema = mongoose.Schema({
   usersDisliked: { type: [String], default: [] },
 });
 
-module.exports = mongoose.model("sauce", saucesSchema);
+module.exports = mongoose.model("sauces", saucesSchema);
