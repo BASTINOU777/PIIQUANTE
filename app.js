@@ -8,11 +8,11 @@ const path = require("path");
 //const connect = require("./connect");
 
 //------Importation de routes pour enregistrer les routes app.use vers le front-------//
-const sauceRoutes = require("./routes /sauces");
+const sauceRoutes = require("./routes/sauces");
 //import sauceRouter from "./routes/stuff";
-const userRoutes = require("./routes /user");
+const userRoutes = require("./routes/user");
 const app = express();
-//const cors = require("cors");
+const cors = require("cors");
 
 //-----------MONGOOSE------------------//
 
