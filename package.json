@@ -17,6 +17,7 @@
     "express": "^4.18.1",
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^6.5.1",
+    "helmet": "^5.1.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.2",
     "mongoose-unique-validator": "^3.1.0",
@@ -32,6 +33,5 @@
     "url": "https://github.com/BASTINOU777/PIIQUANTE/issues"
   },
   "homepage": "https://github.com/BASTINOU777/PIIQUANTE#readme",
-  "devDependencies": {},
   "description": ""
 }

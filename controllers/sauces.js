@@ -9,7 +9,7 @@ const fs = require("fs");
 
 //-----Creation de l'objet d'une Sauce
 exports.createSauce = (req, res, next) => {
-  //converti en json et je parse
+  //converti en json et je parse l'objet
   const sauceObject = JSON.parse(req.body.sauce);
   //console.log (req.file);
   //console.log(sauceObject);

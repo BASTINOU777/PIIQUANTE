@@ -6,13 +6,16 @@ const mongoose = require("mongoose");
 //Installation du Module qui gère les routes
 const path = require("path");
 //const connect = require("./connect");
+//installation de Helmet pour la sécurité des headers
+const helmet = require("helmet");
+require('dotenv').config();
 
 //------Importation de routes pour enregistrer les routes app.use vers le front-------//
 const sauceRoutes = require("./routes/sauces");
 //import sauceRouter from "./routes/stuff";
 const userRoutes = require("./routes/user");
+
 const app = express();
-//const cors = require("cors");
 
 //-----------MONGOOSE------------------//
 
@@ -26,7 +29,9 @@ mongoose
   .catch((error) => console.log("Connexion à MongoDB échouée !", error));
 //------------------ROUTES--------------------//
 
-//route générale pour transformer mes requétes en json
+// transformer mes requétes en json
+// route générale pour Transformer le corps d'une requête en JSON utilisable
+// BodyParser est maintenant déprécié
 app.use(express.json());
 
 //CORS
@@ -52,6 +57,8 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/sauces", sauceRoutes);
 //route générale pour l'authentification des utilisateurs
 app.use("/api/auth/", userRoutes);
+//route qu sécurise les headers
+app.use(helmet());
 
 //app.use(cors());
 

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
 
 //Création du schema de validation
+//permet de n'avoir qu'un seul mail par collection
 const userSchema = mongoose.Schema({
   //adresse mail de l'utilisateur avec H de type string et unique
   email: { type: String, required: true, unique: true },

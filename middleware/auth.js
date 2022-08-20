@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 //Cette Fonction, fait que seul le bon utililsateur puisse changer sa sauce
 module.exports = (req, res, next) => {
   try {
-    //récupération du token en enlevant le mot clef et je récupère le token en deuxième place
+    //récupération du token en enlevant le mot clef et récupération du token après
     const token = req.headers.authorization.split(" ")[1];
     //vérification et décodage du token avec la clé secrète
     const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
