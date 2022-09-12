@@ -8,7 +8,7 @@ const path = require("path");
 //const connect = require("./connect");
 //installation de Helmet pour la sécurité des headers
 const helmet = require("helmet");
-require('dotenv').config();
+require("dotenv").config();
 
 //------Importation de routes pour enregistrer les routes app.use vers le front-------//
 const sauceRoutes = require("./routes/sauces");
@@ -21,10 +21,10 @@ const app = express();
 
 // mongodb+srv://jimbob:<PASSWORD>@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority
 mongoose
-  .connect(
-    "mongodb+srv://BASTINOU777:QDiFGvwyVUtF8lgc@cluster0.3yivc.mongodb.net/?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(process.DB_ACCESS, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch((error) => console.log("Connexion à MongoDB échouée !", error));
 //------------------ROUTES--------------------//

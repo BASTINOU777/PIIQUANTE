@@ -40,7 +40,7 @@ exports.getAllSauce = (req, res, next) => {
       res.status(200).json(sauce);
     })
     .catch((error) => {
-      res.status(500).json({ error: error });
+      res.status(404).json({ error: error });
     });
 };
 //-------- Récupération de l'objet : une Sauce
@@ -85,7 +85,7 @@ exports.deleteSauce = (req, res, next) => {
           .catch((error) => res.status(400).json({ error }));
       });
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(400).json({ error }));
 };
 
 //--------------Gestion des Dislikes et Likes ------------------//

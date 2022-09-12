@@ -8,14 +8,14 @@ const User = require("../models/user");
 //signup créé le mot de passe crypté
 module.exports.signup = (req, res, next) => {
   bcrypt
-    .hash(req.body.password, 10)
+    .hash(req.body.password, SIGNUP_ACCESS)
     //creation nouvel utilisateur
     .then((hash) => {
       const user = new User({
         //ajout de l'adresse mail dans le coprs de la requète
         email: req.body.email,
         //ajout du mot de passe crypté au new user
-        password: hash
+        password: hash,
       });
       //enregistrement du nouvel utilisateur
       user
@@ -54,7 +54,7 @@ module.exports.login = (req, res, next) => {
           res.status(200).json({
             userId: user._id,
             //appel de la fonction "sign" avec les arguments userid et la clefs secrète pour l'encodage
-            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+            token: jwt.sign({ userId: user._id }, process.env.AUTH_TOKEN, {
               //et application d'expiration de 24h
               expiresIn: "24h",
             }),
